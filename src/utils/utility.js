@@ -1,0 +1,1 @@
+export const ninjaArraySort = (a,b) => a.level > b.level ? 1: -1
