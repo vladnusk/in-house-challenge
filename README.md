@@ -43,7 +43,7 @@ I can now say: (n)vim rocks!!!
 2. While at that, what's your favourite plugin with it and what's so superb about it?
    (If you can't decide you are allowed to mention more than one, hehe)
 
-- You are right, I can't decide what is my favorite one. I will definetelty say Emmet, Auto Import, Prettier and Eslint, because they make development faster, easier and cleaner.
+- You are right, I can't decide what is my favorite one. I will definitely say Emmet, Auto Import, Prettier and Eslint, because they make development faster, easier and cleaner.
 
 3. Please add a screenie ...
    You can find a file 'ide-screen.jpg' in the root directory
