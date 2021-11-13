@@ -48,6 +48,10 @@ const ModalContent = styled.div`
     background: #141414;
     color: #fff;
     border: none;
+    &:hover{
+      cursor: pointer;
+      filter: brightness(2)
+    }
   }
 `;
 

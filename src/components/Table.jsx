@@ -6,20 +6,24 @@ import { Modal } from './Modal';
 import { ninjaArraySort } from '../utils/utility';
 
 const Container = styled.div`
-max-width:50vw;
-margin: 0 auto;
 border: 1px solid black;
+div {
+      .rdt_TableRow:hover {
+          cursor:pointer;
+          filter: brightness(1.1);
+          transform:translateX(-.1%);
+        }
+      }
 `
-
 export const Table = () => {
-  const [kittensList, setKittensList] = useState([])
+
   const [data, setData] = useState([])
   const [showModal, setShowModal] = useState(false);
   const [catRow, setCatRow] = useState()
+
   useEffect(()=>{
     axios.get('https://randomuser.me/api?results=100')
       .then(data => {
-        setKittensList(data.data.results.map(kitten => kitten))
         setData(
           data.data.results.map((kitten, index) => {
             const ninjaLevel = () => {
@@ -43,38 +47,52 @@ export const Table = () => {
   const columns = [
     {
       name: 'Name',
-      selector: row => row.name
+      selector: row => row.name,
+      sortable: true,
     },
     {
       name: 'Age',
-      selector: row => row.age
+      selector: row => row.age, 
+      sortable: true,
     },
     {
-      name: 'Ninja level',
-      selector: row => row.level
+      name: 'Ninja Level',
+      selector: row => row.level,
+      sortable: true,
     },
   ]
-
-  const customSort = (rows, selector, direction) => rows.sort((rowA, rowB) => {
-    const aField = selector(rowA)
-    const bField = selector(rowB)
-    return ninjaArraySort(aField,bField)
-  });
-   
+ 
   const handleClick = (row) => {
     setShowModal(prev => !prev);
     setCatRow(row)
   }
 
+  const colorSet = {
+    'Jonin': '#2abe2f',
+    'Chunin': '#2bbb8d',
+    'Genin': '#2bb1bb',
+  }
+
+  const conditionalRowStyles = [
+    {
+      when: (row) => row.level,
+      style: (row) => ({
+        backgroundColor: colorSet[row.level],
+        color: '#ffffff',
+      }),
+    },
+  ];
+
   return (
     <Container>
       <DataTable
+        title='Kittens list'
         columns={columns}
-        data={data}
-        dense
+        data={ninjaArraySort(data)}
         pagination
         onRowClicked={handleClick}
-        sortFunction={customSort}
+        defaultSortFieldId={3}
+        conditionalRowStyles={conditionalRowStyles}
       />
       <Modal showModal={showModal} setShowModal={setShowModal} cat={catRow} />
     </Container>
