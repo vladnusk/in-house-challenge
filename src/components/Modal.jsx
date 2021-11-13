@@ -87,7 +87,7 @@ export const Modal = ({ showModal, setShowModal, cat }) => {
       {showModal ? (
         <Background onClick={closeModal} ref={modalRef}>
           <ModalWrapper showModal={showModal}>
-            <ModalImg src='https://lorempixel.com/640/480/cats/' alt='cat' />
+            <ModalImg src={cat.image} alt='cat' />
             <ModalContent>
               <h1>Name: {cat.name}</h1>
               <h2>Ninja level: {cat.level}</h2>

@@ -37,6 +37,7 @@ export const Table = () => {
               name: kitten.name.first,
               age: Math.floor(Math.random() * (4) + 1),
               level: ninjaLevel(),
+              image: `http://lorempixel.com/640/480/cats/${Math.floor(Math.random() * 10)}`
             }
           })
         )
