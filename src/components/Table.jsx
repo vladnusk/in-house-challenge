@@ -1,5 +1,4 @@
 import {useEffect, useState} from 'react'
-import axios from 'axios'
 import styled from 'styled-components'
 import DataTable from 'react-data-table-component';
 import { Modal } from './Modal';
@@ -16,33 +15,16 @@ div {
       }
 `
 export const Table = () => {
-
+  const [pending, setPending] = useState(true)
   const [data, setData] = useState([])
   const [showModal, setShowModal] = useState(false);
-  const [catRow, setCatRow] = useState()
+  const [catRow, setCatRow] = useState({})
 
-  useEffect(()=>{
-    axios.get('https://randomuser.me/api?results=100')
-      .then(data => {
-        setData(
-          data.data.results.map((kitten, index) => {
-            const ninjaLevel = () => {
-              const randomize = Math.floor(Math.random() * 10);
-              if(randomize >= 7) return 'Jonin'
-              if(randomize >= 4 && randomize < 7 ) return 'Chunin'
-              return 'Genin'
-            }
-            return {
-              id: index,
-              name: kitten.name.first,
-              age: Math.floor(Math.random() * (4) + 1),
-              level: ninjaLevel(),
-              image: `http://lorempixel.com/640/480/cats/${Math.floor(Math.random() * 10)}`
-            }
-          })
-        )
-      })
-      .catch(err => console.error(err))
+  useEffect(async () => {
+    const res = await fetch("/data.json");
+    const kittens = await res.json();
+    setData(kittens);
+    setPending(false)
   },[])
 
   const columns = [
@@ -69,9 +51,16 @@ export const Table = () => {
   }
 
   const colorSet = {
-    'Jonin': '#2abe2f',
-    'Chunin': '#2bbb8d',
-    'Genin': '#2bb1bb',
+    '0 | Academy': '#a9d6e5',
+    '1 | Genin': '#89c2d9',
+    '2 | Chuunin': '#61a5c2',
+    '3 | Jounin': '#468faf',
+    '4 | Special-Jounin': '#2c7da0',
+    '5 | Kage': '#2a6f97',
+    '6 | ANBU': '#014f86',
+    '7 | Hunter': '#01497c',
+    '8 | Master': '#013a63',
+    '9 | S-Class': '#012a4a',
   }
 
   const conditionalRowStyles = [
@@ -94,6 +83,7 @@ export const Table = () => {
         onRowClicked={handleClick}
         defaultSortFieldId={3}
         conditionalRowStyles={conditionalRowStyles}
+        progressPending={pending}
       />
       <Modal showModal={showModal} setShowModal={setShowModal} cat={catRow} />
     </Container>
